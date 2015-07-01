@@ -1,25 +1,29 @@
+
 //Copyright (C) 2015  AIR
 //
-//    This program is free software: you can redistribute it and/or modify
-//    it under the terms of the GNU General Public License as published by
-//    the Free Software Foundation, either version 3 of the License, or
-//    (at your option) any later version.
+//  This program is free software: you can redistribute it and/or modify
+//  it under the terms of the GNU General Public License as published by
+//  the Free Software Foundation, either version 3 of the License, or
+//  (at your option) any later version.
 //
-//    This program is distributed in the hope that it will be useful,
-//    but WITHOUT ANY WARRANTY; without even the implied warranty of
-//    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-//    GNU General Public License for more details.
+//  This program is distributed in the hope that it will be useful,
+//  but WITHOUT ANY WARRANTY; without even the implied warranty of
+//  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+//  GNU General Public License for more details.
 //
-//   You should have received a copy of the GNU General Public License
-//    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+// You should have received a copy of the GNU General Public License
+//  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
 
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionListener;
 
 import javax.swing.BoxLayout;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 
@@ -28,10 +32,11 @@ import javax.swing.JPanel;
  * <p> Contains several methods to manage a simple window. It has a JPanel attribute as the main
  * content panel for the components.</p>
  * @author AIR
- * @version 0.0.1 Anvil
+ * @version 0.0.2 Anvil
  *
  */
 public class Menu extends JFrame {
+	public static class InvalidPathException extends RuntimeException{private static final long serialVersionUID = 3L;};
 	
 
 	private static final long serialVersionUID = 1L;
@@ -42,8 +47,8 @@ public class Menu extends JFrame {
 	 * @param x Width
 	 * @param y Height
 	 * @param layoutType. [0] Flow Layout (Default)<br>
-	 * 				  	  [1] BoxLayout <br> //TODO
-	 * 				  	  [2] GridLayout <br> //TODO
+	 * 				  	  [1] BoxLayout <br>
+	 * 				  	  [2] GridLayout <br>
 	 */
 	public Menu(String titulo, int x, int y, int layoutType) {
 		super(titulo);
@@ -93,6 +98,37 @@ public class Menu extends JFrame {
 		content.add(button);
 		revalidate();
 
+	}
+	
+	/**
+	 * Adds a JLabel with an image.
+	 * @param path of the image
+	 * @throws InvalidPathException if the image path is wrong.
+	 */
+	
+	public void addImage(String path) throws InvalidPathException {
+		ImageIcon image = createImageIcon(path,null);
+		if (image==null) {
+			throw new InvalidPathException();
+		}
+		JLabel lbl = new JLabel(image);
+		content.add(lbl);
+		revalidate();
+	}
+
+	/**
+	 * Private method to verify if an image path is correct.
+	 * @param path of the image
+	 * @param description to add to the ImageIcon returned
+	 * @return An imageIcon if the path is correct, null if is not.
+	 */
+	private ImageIcon createImageIcon(String path, String description) {
+		java.net.URL imgURL = getClass().getResource(path);
+		if (imgURL != null) {
+			return new ImageIcon(imgURL,description);
+		} else {
+			return null;
+		}
 	}
 		
 	
