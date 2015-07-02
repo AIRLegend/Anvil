@@ -15,4 +15,4 @@
 ***
 Swing based Java graphic library.
 
-Can easily be used for anyone who wants to implement a simple GUI in his/her project.
+Can easily be used by anyone who wants to implement a simple GUI in his/her project.
