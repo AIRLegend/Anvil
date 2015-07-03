@@ -15,6 +15,7 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 
+import java.awt.Color;
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionListener;
@@ -32,7 +33,7 @@ import javax.swing.JPanel;
  * <p> Contains several methods to manage a simple window. It has a JPanel attribute as the main
  * content panel for the components.</p>
  * @author AIR
- * @version 0.0.2 Anvil
+ * @version 0.0.3 Anvil
  *
  */
 public class Menu extends JFrame {
@@ -41,6 +42,10 @@ public class Menu extends JFrame {
 
 	private static final long serialVersionUID = 1L;
 	private JPanel content;
+	private Color backColor=null;
+	private Color fontColor=null;
+	
+	
 	/**
 	 * Create the window with a title, width and height. 
 	 * @param titulo. Title of the window.
@@ -69,6 +74,38 @@ public class Menu extends JFrame {
 	}
 	
 	/**
+	 * Creates a Menu window with the given colors.
+	 * @param titulo Title of the window
+	 * @param x Width
+	 * @param y Height
+	 * @param layoutType 
+	 * @param backColor Color of the background
+	 * @param fontColor Color that will be used for the text.
+	 */
+	
+	public Menu(String titulo, int x, int y, int layoutType, Color backColor, Color fontColor) {
+		
+		super(titulo);
+		setSize(x,y);
+		content = new JPanel();
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		
+		if (layoutType==1){
+			content.setLayout(new BoxLayout(content,5));
+		} else if (layoutType==2){
+			content.setLayout(new GridLayout());
+		} else {
+			content.setLayout(new FlowLayout());
+		}
+		
+		add(content);
+		setVisible(true);
+		changeColors(fontColor,backColor);
+		
+	}
+	
+	
+	/**
 	 * Create the window with a title, width and height and FlowLayout. 
 	 * @param titulo. Title of the window.
 	 * @param x Width
@@ -84,6 +121,21 @@ public class Menu extends JFrame {
 		setVisible(true);
 	}
 
+	
+	/**
+	 * Add a text to the window as a Label.
+	 * @param textLabel Text to add.
+	 */
+	public void addText(String textLabel) {
+		JLabel text = new JLabel(textLabel);
+		
+		if(fontColor != null) { // If the window is as default, don't change the font color.
+			text.setForeground(fontColor);
+		} 
+		
+		content.add(text);
+		validate();		
+	}
 	
 
 	/**
@@ -129,6 +181,19 @@ public class Menu extends JFrame {
 		} else {
 			return null;
 		}
+	}
+	
+	
+	/**
+	 * Change the two main colors of the window (font and background color).
+	 * @param font Color for changing the font.
+	 * @param back Color for changing the background.
+	 */
+	private void changeColors(Color font, Color back) {
+		backColor=back;
+		fontColor=font;
+		content.setBackground(backColor);
+		revalidate();
 	}
 		
 	
