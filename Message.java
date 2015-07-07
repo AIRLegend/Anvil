@@ -19,12 +19,13 @@ import javax.swing.JOptionPane;
 /**
  * Class for displaying some kinds of messages.
  * @author AIR
- * @version 0.0.1 Anvil
+ * @version 1.0.0 Anvil
  */
 
 public class Message {
-	
 
+	private String input=null;
+	
 	/**
 	 * Creates a basic message.
 	 * @param text Text of the message
@@ -37,7 +38,8 @@ public class Message {
 	
 	/**
 	 * Creates several types.
-	 * @param type of the message. [1] Error Message [2] Warning Message [3] Plain Message <br> Otherwise: Default message.
+	 * @param type of the message. [1] Error Message [2] Warning Message [3] Plain Message  
+	 * 							   [4] Input Message.<br> Otherwise: Default message.
 	 * @param titulo Title of the message.
 	 * @param text Content of the message.
 	 */
@@ -49,10 +51,17 @@ public class Message {
 			JOptionPane.showMessageDialog(null,titulo,text,JOptionPane.WARNING_MESSAGE);
 		} else if (type==3) {
 			JOptionPane.showMessageDialog(null,titulo,text,JOptionPane.PLAIN_MESSAGE);
-		} else {
+		} else if (type==4){
+			input=JOptionPane.showInputDialog(null,"Hi"); //Saves the read value.
+		}else {
 			JOptionPane.showMessageDialog(null, text);
 		}
 		
 	}
+	
+	public String getInput() {
+		return input;
+	}
+	
 
 }
