@@ -14,6 +14,7 @@
 //You should have received a copy of the GNU General Public License
 //along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+import java.awt.Component;
 import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -23,11 +24,13 @@ import java.awt.event.MouseMotionAdapter;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.net.MalformedURLException;
 
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JScrollPane;
 
 /**
  * Class for creating window menus from images. It has an attribute  "main" which will be the main panel
@@ -35,7 +38,7 @@ import javax.swing.JFrame;
  * As the frame is undecorated (doesn't have bar), the window will be positioned by dragging it. Also, it's recommended 
  * to add a close button.
  * @author AIR
- * @version 1.0.0
+ * @version 1.1.0
  *
  */
 public class WindowFromImage extends JFrame {
@@ -83,6 +86,7 @@ public class WindowFromImage extends JFrame {
 		setLocationRelativeTo(null);
 		add(main);
 		setVisible(true);
+		setResizable(false);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
 	}
@@ -157,5 +161,53 @@ public class WindowFromImage extends JFrame {
 		button.setBounds(x, y, buttonIco.getWidth(), buttonIco.getHeight()); //Positioning it
 		repaint();
 		revalidate();
+	}
+	
+	
+	/**
+	 * Adds a frame  which displays an HTML document or a simple web page.
+	 * @param url Path (local) of the document  or URL of the web page.
+	 * @param x x-position.
+	 * @param y y-position.
+	 * @param width 
+	 * @param height
+	 * @param scroll true, if wanted to be scrollable, false if not.
+	 * @throws IOException If the HTML document path is wrong or the document is unreadable.
+	 * @throws MalformedURLException If the URL to the document (web) is wrong
+	 * @see HTMLPanel
+ 	 */
+	public void addHTMLFrame(String url, int x, int y, int width, int height, boolean scroll) throws IOException, MalformedURLException{
+		HTMLPanel j = new HTMLPanel(url,false);
+		//j.updateURL("index.html");
+		//j.updateURL("index2.hmtl");
+		if (scroll){
+			JScrollPane j2 = new JScrollPane(j);
+			j2.setBounds(x,y,width,height);
+			main.add(j2);
+		}else{
+			j.setBounds(x,y,width,height);
+			main.add(j);
+		}
+	}
+	
+	/**
+	 * Updates the view of the HTMLPanel which has a given URL.
+	 * @param oldURL the URL which has the panel to change.
+	 * @param newURL new desired URL to show.
+	 * @throws IOException If the HTML document path is wrong or the document is unreadable.
+	 * @see HTMLPanel
+	 */
+	public void updateHTMLFrame(String oldURL, String newURL) throws IOException {
+		Component components [] = main.getComponents();
+		for(int i=0;i<components.length;i++) {
+			if (components[i] instanceof HTMLPanel ){
+				HTMLPanel temp = (HTMLPanel)(components[i]);
+				if (temp.getURL().equals(oldURL)) {
+					temp.updateURL(newURL);
+					return;
+					
+				}
+			}
+		}
 	}
 }

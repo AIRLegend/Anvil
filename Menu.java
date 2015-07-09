@@ -16,9 +16,13 @@
 
 
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionListener;
+import java.io.IOException;
+import java.net.MalformedURLException;
+
 
 import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
@@ -26,6 +30,7 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 
 
 /**
@@ -33,7 +38,7 @@ import javax.swing.JPanel;
  * <p> Contains several methods to manage a simple window. It has a JPanel attribute as the main
  * content panel for the components.</p>
  * @author AIR
- * @version 0.0.3 Anvil
+ * @version 1.1.0 Anvil
  *
  */
 public class Menu extends JFrame {
@@ -154,12 +159,13 @@ public class Menu extends JFrame {
 	
 	/**
 	 * Adds a JLabel with an image.
-	 * @param path of the image
+	 * @param path of the image (needs to be in the same package as the class).
 	 * @throws InvalidPathException if the image path is wrong.
 	 */
 	
 	public void addImage(String path) throws InvalidPathException {
 		ImageIcon image = createImageIcon(path,null);
+
 		if (image==null) {
 			throw new InvalidPathException();
 		}
@@ -167,10 +173,59 @@ public class Menu extends JFrame {
 		content.add(lbl);
 		revalidate();
 	}
+	
+	/**
+	 * Adds a frame  which displays an HTML document or a simple web page.
+	 * @param url Path (local) of the document  or URL of the web page.
+	 * @param x x-position.
+	 * @param y y-position.
+	 * @param width 
+	 * @param height
+	 * @param scroll true, if wanted to be scrollable, false if not.
+	 * @throws IOException If the HTML document path is wrong or the document is unreadable.
+	 * @throws MalformedURLException If the URL to the document (web) is wrong
+	 * @see HTMLPanel
+ 	 */
+
+	public void addHTMLFrame(String url, int x, int y, int width, int height, boolean scroll) throws IOException, MalformedURLException {
+		HTMLPanel j = new HTMLPanel(url,false);
+		if (scroll){
+			JScrollPane j2 = new JScrollPane(j);
+			j2.setBounds(x,y,width,height);
+			content.add(j2);
+		}else{
+			j.setBounds(x,y,width,height);
+			content.add(j);
+		}
+	}
+	
+	
 
 	/**
+	 * Updates the view of the HTMLPanel which has a given URL.
+	 * @param oldURL the URL which has the panel to change.
+	 * @param newURL new desired URL to show.
+	 * @throws IOException If the HTML document path is wrong or the document is unreadable.
+	 * @see HTMLPanel
+	 */
+	public void updateHTMLFrame(String oldURL, String newURL) throws IOException {
+		Component components [] = content.getComponents();
+		for(int i=0;i<components.length;i++) {
+			if (components[i] instanceof HTMLPanel ){
+				HTMLPanel temp = (HTMLPanel)(components[i]);
+				if (temp.getURL().equals(oldURL)) {
+					temp.updateURL(newURL);
+					return;
+					
+				}
+			}
+		}
+	}
+	
+	
+	/**
 	 * Private method to verify if an image path is correct.
-	 * @param path of the image
+	 * @param path of the image (needs to be in the same package as the class)
 	 * @param description to add to the ImageIcon returned
 	 * @return An imageIcon if the path is correct, null if is not.
 	 */
@@ -194,7 +249,6 @@ public class Menu extends JFrame {
 		fontColor=font;
 		content.setBackground(backColor);
 		revalidate();
-	}
-		
+	}	
 	
 }
