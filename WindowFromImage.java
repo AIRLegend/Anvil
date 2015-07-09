@@ -22,7 +22,6 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionAdapter;
 import java.awt.image.BufferedImage;
-import java.io.File;
 import java.io.IOException;
 import java.net.MalformedURLException;
 
@@ -38,7 +37,7 @@ import javax.swing.JScrollPane;
  * As the frame is undecorated (doesn't have bar), the window will be positioned by dragging it. Also, it's recommended 
  * to add a close button.
  * @author AIR
- * @version 1.1.0
+ * @version 1.1.1
  *
  */
 public class WindowFromImage extends JFrame {
@@ -98,7 +97,7 @@ public class WindowFromImage extends JFrame {
 	 */
 	public void addCloseButton(String path) throws IOException{
 		
-		BufferedImage buttonIco = ImageIO.read(new File(path));
+		BufferedImage buttonIco = ImageIO.read(WindowFromImage.class.getResource(path));
 		JButton button = new JButton(new ImageIcon(buttonIco));
 		
 		button.addActionListener(new ActionListener(){ //Add close action to the button.
@@ -125,7 +124,7 @@ public class WindowFromImage extends JFrame {
 	 */
 	public void addCloseButton(String path, int x, int y) throws IOException{
 		
-		BufferedImage buttonIco = ImageIO.read(new File(path));
+		BufferedImage buttonIco = ImageIO.read(WindowFromImage.class.getResource(path));
 		JButton button = new JButton(new ImageIcon(buttonIco));
 		
 		button.addActionListener(new ActionListener(){ //Add close action to the button.
@@ -154,7 +153,7 @@ public class WindowFromImage extends JFrame {
 	 */
 	
 	public void addButton(String path, int x, int y, ActionListener e) throws IOException {
-		BufferedImage buttonIco = ImageIO.read(new File(path));
+		BufferedImage buttonIco = ImageIO.read(WindowFromImage.class.getResource(path));
 		JButton button = new JButton(new ImageIcon(buttonIco));
 		button.addActionListener(e);
 		main.add(button);
@@ -178,8 +177,6 @@ public class WindowFromImage extends JFrame {
  	 */
 	public void addHTMLFrame(String url, int x, int y, int width, int height, boolean scroll) throws IOException, MalformedURLException{
 		HTMLPanel j = new HTMLPanel(url,false);
-		//j.updateURL("index.html");
-		//j.updateURL("index2.hmtl");
 		if (scroll){
 			JScrollPane j2 = new JScrollPane(j);
 			j2.setBounds(x,y,width,height);

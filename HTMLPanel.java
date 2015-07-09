@@ -1,20 +1,4 @@
 
-//Copyright (C) 2015  AIR
-//
-//  This program is free software: you can redistribute it and/or modify
-//  it under the terms of the GNU General Public License as published by
-//  the Free Software Foundation, either version 3 of the License, or
-//  (at your option) any later version.
-//
-//  This program is distributed in the hope that it will be useful,
-//  but WITHOUT ANY WARRANTY; without even the implied warranty of
-//  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-//  GNU General Public License for more details.
-//
-// You should have received a copy of the GNU General Public License
-//  along with this program.  If not, see <http://www.gnu.org/licenses/>.
-
-import java.io.File;
 import java.io.IOException;
 import java.net.MalformedURLException;
 
@@ -24,7 +8,7 @@ import javax.swing.text.Document;
 /**
  * Class which displays an HTML document  or a simple web page in a Panel.
  * @author AIR
- * @version 1.2.0
+ * @version 1.2.1
  */
 public class HTMLPanel extends JEditorPane{
 
@@ -42,10 +26,10 @@ public class HTMLPanel extends JEditorPane{
 	public HTMLPanel(String url,boolean editable) throws MalformedURLException, IOException {
 		super();
 		this.url = url;
-		if(url.contains("www.")) {
+		if(url.contains("www.") || url.contains("http://www.") || url.contains("https://www.")) {
 			setPage(url);
 		}else {
-			setPage(new File(url).toURI().toURL());
+			setPage(HTMLPanel.class.getResource(url));
 		}
 		setEditable(editable);
 		
@@ -68,15 +52,18 @@ public class HTMLPanel extends JEditorPane{
 		this.url=newURL;
 		
 		try{
-			if(url.contains("www.")) {
+			if(url.contains("www.") || newURL.contains("http://www.") || newURL.contains("https://www.")) {
 				setPage(newURL);
 			}else {
-				setPage(new File(newURL).toURI().toURL());
+				setContentType("text/html");
+				setPage(HTMLPanel.class.getResource(newURL));
 			}
 			reload();
 			
 		}catch (MalformedURLException e){
 			setPage("<html>Sorry, the page could not be loaded.</html>");
+		}catch (IOException e){
+			setPage("<html>Sorry, the file could not be found.</html>");
 		}
 		
 	}

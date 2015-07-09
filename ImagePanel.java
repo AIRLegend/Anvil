@@ -16,7 +16,6 @@
 
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
-import java.io.File;
 import java.io.IOException;
 
 import javax.imageio.ImageIO;
@@ -25,7 +24,7 @@ import javax.swing.JPanel;
 /**
  * Class which creates a Panel to add on a JFrame from an image.
  * @author AIR
- * @version 1.0.0
+ * @version 1.0.1
  */
 public class ImagePanel extends JPanel {
 
@@ -38,7 +37,7 @@ public class ImagePanel extends JPanel {
 	 * @throws IOException If the path is wrong or the file is not readable.
 	 */
 	public ImagePanel(String path) throws IOException {
-		image = ImageIO.read(new File(path));
+		image = ImageIO.read(ImagePanel.class.getResource(path));
 	}
 	
 	/**

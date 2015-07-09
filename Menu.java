@@ -42,9 +42,7 @@ import javax.swing.JScrollPane;
  *
  */
 public class Menu extends JFrame {
-	public static class InvalidPathException extends RuntimeException{private static final long serialVersionUID = 3L;};
 	
-
 	private static final long serialVersionUID = 1L;
 	private JPanel content;
 	private Color backColor=null;
@@ -161,14 +159,16 @@ public class Menu extends JFrame {
 	 * Adds a JLabel with an image.
 	 * @param path of the image (needs to be in the same package as the class).
 	 * @throws InvalidPathException if the image path is wrong.
+	 * @throws IOException 
 	 */
 	
-	public void addImage(String path) throws InvalidPathException {
+	public void addImage(String path) throws IOException {
 		ImageIcon image = createImageIcon(path,null);
 
 		if (image==null) {
-			throw new InvalidPathException();
+			throw new IOException();
 		}
+		
 		JLabel lbl = new JLabel(image);
 		content.add(lbl);
 		revalidate();
@@ -187,8 +187,8 @@ public class Menu extends JFrame {
 	 * @see HTMLPanel
  	 */
 
-	public void addHTMLFrame(String url, int x, int y, int width, int height, boolean scroll) throws IOException, MalformedURLException {
-		HTMLPanel j = new HTMLPanel(url,false);
+	public void addHTMLFrame(String url, int x, int y, int width, int height, boolean scroll, boolean editable) throws IOException, MalformedURLException {
+		HTMLPanel j = new HTMLPanel(url,editable);
 		if (scroll){
 			JScrollPane j2 = new JScrollPane(j);
 			j2.setBounds(x,y,width,height);
