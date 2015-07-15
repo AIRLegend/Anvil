@@ -24,7 +24,7 @@ import javax.swing.JPanel;
 /**
  * Class which creates a Panel to add on a JFrame from an image.
  * @author AIR
- * @version 1.0.1
+ * @version 1.0.2
  */
 public class ImagePanel extends JPanel {
 
@@ -47,7 +47,6 @@ public class ImagePanel extends JPanel {
 	@Override
 	public void paintComponent (Graphics graphics) {
 		graphics.drawImage(image,0,0,null);
-		repaint();
 	}
 	
 	public int getWidth(){

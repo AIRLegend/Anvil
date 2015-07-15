@@ -37,7 +37,7 @@ import javax.swing.JScrollPane;
  * As the frame is undecorated (doesn't have bar), the window will be positioned by dragging it. Also, it's recommended 
  * to add a close button.
  * @author AIR
- * @version 1.1.1
+ * @version 1.1.2
  *
  */
 public class WindowFromImage extends JFrame {
@@ -51,7 +51,6 @@ public class WindowFromImage extends JFrame {
 	public WindowFromImage(String path) throws IOException{
 		main= new ImagePanel(path);
 		main.setLayout(null);
-		
 		//Add the listeners so the window can be moved.--------------//
 		main.addMouseListener(new MouseAdapter() {
 			public void mousePressed(MouseEvent e) {
@@ -109,9 +108,6 @@ public class WindowFromImage extends JFrame {
 		
 		main.add(button);
 		button.setBounds(getWidth()-buttonIco.getWidth()-10, 10, buttonIco.getWidth(), buttonIco.getHeight()); //Positioning it
-		repaint();
-		revalidate();
-		
 	}
 	
 	
@@ -136,8 +132,6 @@ public class WindowFromImage extends JFrame {
 		
 		main.add(button);
 		button.setBounds(x, y, buttonIco.getWidth(), buttonIco.getHeight()); //Positioning it
-		repaint();
-		revalidate();
 		
 	}
 	
@@ -158,8 +152,6 @@ public class WindowFromImage extends JFrame {
 		button.addActionListener(e);
 		main.add(button);
 		button.setBounds(x, y, buttonIco.getWidth(), buttonIco.getHeight()); //Positioning it
-		repaint();
-		revalidate();
 	}
 	
 	
@@ -175,8 +167,8 @@ public class WindowFromImage extends JFrame {
 	 * @throws MalformedURLException If the URL to the document (web) is wrong
 	 * @see HTMLPanel
  	 */
-	public void addHTMLFrame(String url, int x, int y, int width, int height, boolean scroll) throws IOException, MalformedURLException{
-		HTMLPanel j = new HTMLPanel(url,false);
+	public void addHTMLFrame(String url, int x, int y, int width, int height, boolean scroll, boolean editable) throws IOException, MalformedURLException{
+		HTMLPanel j = new HTMLPanel(url,editable);
 		if (scroll){
 			JScrollPane j2 = new JScrollPane(j);
 			j2.setBounds(x,y,width,height);
@@ -194,13 +186,13 @@ public class WindowFromImage extends JFrame {
 	 * @throws IOException If the HTML document path is wrong or the document is unreadable.
 	 * @see HTMLPanel
 	 */
-	public void updateHTMLFrame(String oldURL, String newURL) throws IOException {
+	public void updateHTMLFrame(String oldURL, String newURL,boolean editable) throws IOException {
 		Component components [] = main.getComponents();
 		for(int i=0;i<components.length;i++) {
 			if (components[i] instanceof HTMLPanel ){
 				HTMLPanel temp = (HTMLPanel)(components[i]);
 				if (temp.getURL().equals(oldURL)) {
-					temp.updateURL(newURL);
+					temp.updateURL(newURL,editable);
 					return;
 					
 				}

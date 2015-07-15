@@ -38,7 +38,7 @@ import javax.swing.JScrollPane;
  * <p> Contains several methods to manage a simple window. It has a JPanel attribute as the main
  * content panel for the components.</p>
  * @author AIR
- * @version 1.1.0 Anvil
+ * @version 1.1.1 Anvil
  *
  */
 public class Menu extends JFrame {
@@ -208,13 +208,13 @@ public class Menu extends JFrame {
 	 * @throws IOException If the HTML document path is wrong or the document is unreadable.
 	 * @see HTMLPanel
 	 */
-	public void updateHTMLFrame(String oldURL, String newURL) throws IOException {
+	public void updateHTMLFrame(String oldURL, String newURL, boolean editable) throws IOException {
 		Component components [] = content.getComponents();
 		for(int i=0;i<components.length;i++) {
 			if (components[i] instanceof HTMLPanel ){
 				HTMLPanel temp = (HTMLPanel)(components[i]);
 				if (temp.getURL().equals(oldURL)) {
-					temp.updateURL(newURL);
+					temp.updateURL(newURL,editable);
 					return;
 					
 				}
