@@ -37,7 +37,7 @@ import javax.swing.JScrollPane;
  * As the frame is undecorated (doesn't have bar), the window will be positioned by dragging it. Also, it's recommended 
  * to add a close button.
  * @author AIR
- * @version 1.1.2
+ * @version 1.2.2
  *
  */
 public class WindowFromImage extends JFrame {
@@ -199,4 +199,15 @@ public class WindowFromImage extends JFrame {
 			}
 		}
 	}
+	
+	
+	public void addCheckBoxPanel(DataCheckPanel panel, int x, int y, int height, int width) {
+		
+		panel.setBounds(x, y, height, width);
+		main.add(panel);
+		revalidate();
+		
+	}
+	
+	
 }

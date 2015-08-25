@@ -38,7 +38,7 @@ import javax.swing.JScrollPane;
  * <p> Contains several methods to manage a simple window. It has a JPanel attribute as the main
  * content panel for the components.</p>
  * @author AIR
- * @version 1.1.1 Anvil
+ * @version 1.2.1 Anvil
  *
  */
 public class Menu extends JFrame {
@@ -65,7 +65,7 @@ public class Menu extends JFrame {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
 		if (layoutType==1){
-			content.setLayout(new BoxLayout(content,5));
+			content.setLayout(new BoxLayout(content,2));
 		} else if (layoutType==2){
 			content.setLayout(new GridLayout());
 		} else {
@@ -220,6 +220,17 @@ public class Menu extends JFrame {
 				}
 			}
 		}
+	}
+	
+	
+	/**
+	 * Adds a panel with "Tick-buttons".
+	 * @param panel A DataCheckPanel object.
+	 */
+	public void addCheckBoxPanel(DataCheckPanel panel) {
+		add(panel);
+		revalidate();
+		
 	}
 	
 	
