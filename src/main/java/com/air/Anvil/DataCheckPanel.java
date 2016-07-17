@@ -1,3 +1,4 @@
+package com.air.Anvil;
 
 //Copyright (C) 2015  AIR
 //
@@ -28,7 +29,7 @@ import javax.swing.JPanel;
  * Class which describes a panel with JCheckBoxes and some methods to manage them.
  * Contains an ArrayList with all the JCheckBoxes added.
  * @author AIR
- *
+ * @version 1.0.0
  */
 public class DataCheckPanel extends JPanel {
 	/**
@@ -57,17 +58,15 @@ public class DataCheckPanel extends JPanel {
 			this.maxOptionsChecked = maxOptionsChecked;
 		}
 		
-		JCheckBox check = new JCheckBox(name);
+		final JCheckBox check = new JCheckBox(name);
 		
 		check.addActionListener(new ActionListener() {
-			@Override
+			
 			public void actionPerformed (ActionEvent e) {
 				if (check.isSelected() == true) {
 					checkedOptions++;
-					System.out.println(checkedOptions);
 				} else if (check.isSelected() == false) {
 					checkedOptions--;
-					System.out.println(checkedOptions);
 				}
 				updateUnusedCheckBoxes();
 				
@@ -84,17 +83,14 @@ public class DataCheckPanel extends JPanel {
 	 * @param name Name of the checkbox.
 	 */
 	public void addCheckBox(String name) {
-		JCheckBox check = new JCheckBox(name);
+		final JCheckBox check = new JCheckBox(name);
 		
 		check.addActionListener(new ActionListener() {
-			@Override
 			public void actionPerformed (ActionEvent e) {
 				if (check.isSelected() == true) {
 					checkedOptions++;
-					System.out.println(checkedOptions);
 				} else if (check.isSelected() == false) {
 					checkedOptions--;
-					System.out.println(checkedOptions);
 				}
 				updateUnusedCheckBoxes();
 			}

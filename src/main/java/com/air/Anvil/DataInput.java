@@ -1,3 +1,4 @@
+package com.air.Anvil;
 
 //Copyright (C) 2015  AIR
 //
@@ -34,7 +35,7 @@ import javax.swing.JTextField;
  * (they will be a label and its field to input data). Two panels and a boolean that indicates if the user has clicked the button to
  * hide the window.
  * @author AIR
- * @version 0.0.2a Anvil
+ * @version 1.0.0 Anvil
  *
  */
 
@@ -156,10 +157,7 @@ public class DataInput extends JFrame{
 				Thread.sleep(1);
 			} catch (InterruptedException e) {}
 		}
-		
-		
 		setVisible(false);
-
 	}
 	 
 	/**
@@ -177,7 +175,6 @@ public class DataInput extends JFrame{
 	 */
 	private HashMap<String,JTextField> returnMap() {
 		return map;
-		
 	}
 	
 	/**

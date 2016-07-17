@@ -1,3 +1,4 @@
+package com.air.Anvil;
 
 //Copyright (C) 2015  AIR
 //
@@ -100,7 +101,7 @@ public class WindowFromImage extends JFrame {
 		JButton button = new JButton(new ImageIcon(buttonIco));
 		
 		button.addActionListener(new ActionListener(){ //Add close action to the button.
-			@Override
+			
 			public void actionPerformed(ActionEvent e){
 				System.exit(0);
 			}
@@ -124,7 +125,7 @@ public class WindowFromImage extends JFrame {
 		JButton button = new JButton(new ImageIcon(buttonIco));
 		
 		button.addActionListener(new ActionListener(){ //Add close action to the button.
-			@Override
+			
 			public void actionPerformed(ActionEvent e){
 				System.exit(0);
 			}
@@ -163,6 +164,7 @@ public class WindowFromImage extends JFrame {
 	 * @param width 
 	 * @param height
 	 * @param scroll true, if wanted to be scrollable, false if not.
+	 * @param editable true if is wanted the content to be editable, false if not.
 	 * @throws IOException If the HTML document path is wrong or the document is unreadable.
 	 * @throws MalformedURLException If the URL to the document (web) is wrong
 	 * @see HTMLPanel
@@ -189,7 +191,7 @@ public class WindowFromImage extends JFrame {
 	public void updateHTMLFrame(String oldURL, String newURL,boolean editable) throws IOException {
 		Component components [] = main.getComponents();
 		for(int i=0;i<components.length;i++) {
-			if (components[i] instanceof HTMLPanel ){
+			if (components[i] instanceof HTMLPanel){
 				HTMLPanel temp = (HTMLPanel)(components[i]);
 				if (temp.getURL().equals(oldURL)) {
 					temp.updateURL(newURL,editable);
@@ -202,7 +204,6 @@ public class WindowFromImage extends JFrame {
 	
 	
 	public void addCheckBoxPanel(DataCheckPanel panel, int x, int y, int height, int width) {
-		
 		panel.setBounds(x, y, height, width);
 		main.add(panel);
 		revalidate();
