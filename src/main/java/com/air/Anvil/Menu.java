@@ -18,16 +18,18 @@ package com.air.Anvil;
 
 import java.awt.Color;
 import java.awt.Component;
+import java.awt.Container;
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.net.MalformedURLException;
-
+import java.util.HashMap;
 
 import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -39,7 +41,7 @@ import javax.swing.JScrollPane;
  * <p> Contains several methods to manage a simple window. It has a JPanel attribute as the main
  * content panel for the components.</p>
  * @author AIR
- * @version 1.2.1 Anvil
+ * @version 1.2.2 Anvil
  *
  */
 public class Menu extends JFrame {
@@ -48,6 +50,7 @@ public class Menu extends JFrame {
 	private JPanel content;
 	private Color backColor=null;
 	private Color fontColor=null;
+	private HashMap<String,Component> components;
 	
 	
 	/**
@@ -64,6 +67,7 @@ public class Menu extends JFrame {
 		setSize(x,y);
 		content = new JPanel();
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		components = new HashMap<String,Component>();
 		
 		if (layoutType==1){
 			content.setLayout(new BoxLayout(content,2));
@@ -92,6 +96,7 @@ public class Menu extends JFrame {
 		super(titulo);
 		setSize(x,y);
 		content = new JPanel();
+		components = new HashMap<String,Component>();
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
 		if (layoutType==1){
@@ -123,14 +128,20 @@ public class Menu extends JFrame {
 		content.setLayout(new FlowLayout());
 		add(content);
 		setVisible(true);
+		components = new HashMap<String,Component>();
 	}
 
 	
 	/**
 	 * Add a text to the window as a Label.
 	 * @param textLabel Text to add.
+	 * @param id id of the component
 	 */
-	public void addText(String textLabel) {
+	public void addText(String textLabel, String id) {
+		
+		if(components.containsKey(id))
+			return;
+		
 		JLabel text = new JLabel(textLabel);
 		
 		if(fontColor != null) { // If the window is as default, don't change the font color.
@@ -138,19 +149,25 @@ public class Menu extends JFrame {
 		} 
 		
 		content.add(text);
+		components.put(id, text);
 		validate();		
 	}
 	
 
 	/**
 	 * Adds a button to perform an action.
+	 * @param id The id of the component 
 	 * @param text of the button.
 	 * @param e Event which will happen after click the button.
 	 */
 	
-	public void addButton(String text, ActionListener e) {
+	public void addButton(String id, String text, ActionListener e) {
+		if(components.containsKey(id))
+			return;
+		
 		JButton button = new JButton(text);
 		button.addActionListener(e);
+		components.put(id, button);
 		content.add(button);
 		revalidate();
 
@@ -158,25 +175,31 @@ public class Menu extends JFrame {
 	
 	/**
 	 * Adds a JLabel with an image.
+	 * @param id The id of the component
 	 * @param path of the image (needs to be in the same package as the class).
 	 * @throws InvalidPathException if the image path is wrong.
 	 * @throws IOException 
 	 */
 	
-	public void addImage(String path) throws IOException {
+	public void addImage(String id, String path) throws IOException {
 		ImageIcon image = createImageIcon(path,null);
+		
+		if(components.containsKey(id))
+			return;
 
 		if (image==null) {
 			throw new IOException();
 		}
 		
 		JLabel lbl = new JLabel(image);
+		components.put(id, lbl);
 		content.add(lbl);
 		revalidate();
 	}
 	
 	/**
 	 * Adds a frame  which displays an HTML document or a simple web page.
+	 * @param id The id of the component
 	 * @param url Path (local) of the document  or URL of the web page.
 	 * @param x x-position.
 	 * @param y y-position.
@@ -188,7 +211,10 @@ public class Menu extends JFrame {
 	 * @see HTMLPanel
  	 */
 
-	public void addHTMLFrame(String url, int x, int y, int width, int height, boolean scroll, boolean editable) throws IOException, MalformedURLException {
+	public void addHTMLFrame(String id, String url, int x, int y, int width, int height, boolean scroll, boolean editable) throws IOException, MalformedURLException {
+		if(components.containsKey(id)) 
+			return;
+		
 		HTMLPanel j = new HTMLPanel(url,editable);
 		if (scroll){
 			JScrollPane j2 = new JScrollPane(j);
@@ -198,6 +224,7 @@ public class Menu extends JFrame {
 			j.setBounds(x,y,width,height);
 			content.add(j);
 		}
+		components.put(id, j);
 	}
 	
 	
@@ -226,12 +253,24 @@ public class Menu extends JFrame {
 	
 	/**
 	 * Adds a panel with "Tick-buttons".
+	 * @param id The id of the component
 	 * @param panel A DataCheckPanel object.
 	 */
-	public void addCheckBoxPanel(DataCheckPanel panel) {
+	public void addCheckBoxPanel(String id, DataCheckPanel panel) {
+		if(components.containsKey(id))
+			return;
+		components.put(id, panel);
 		add(panel);
 		revalidate();
 		
+	}
+	
+	/**
+	 * Returns component associated with an ID. Null if not.
+	 * @param id
+	 */
+	public Component getComponent(String id) {
+		return components.get(id);
 	}
 	
 	
