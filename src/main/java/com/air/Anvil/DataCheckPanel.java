@@ -109,6 +109,31 @@ public class DataCheckPanel extends JPanel {
 	}
 	
 	/**
+	 * Find a checkbox given the name.
+	 * @param name
+	 */
+	private JCheckBox getCheckBox(String name) {
+		for(int i=0; i<checkboxes.size();i++) {
+			if(checkboxes.get(i).getText().equals(name)) {
+				return checkboxes.get(i);
+			}
+		}
+		return null;
+	}
+	
+	/**
+	 * Adds a listener to a checkbox matching the name
+	 * @param name
+	 * @param a
+	 */
+	public void addCheckBoxListener(String name, ActionListener a) {
+		JCheckBox chk = getCheckBox(name);
+		if (chk == null) return;
+		chk.addActionListener(a);
+	}
+	
+	
+	/**
 	 * Returns the value of the selected checkbox.
 	 * @param name Name of the checkbox.
 	 * @throws RuntimeException if the wanted checkbox doesn't exist.
