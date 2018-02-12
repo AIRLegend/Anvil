@@ -79,6 +79,22 @@ public class DataCheckPanel extends JPanel {
 	
 	
 	/**
+	 * Creates the panel with a checkbox.
+	 * @param maxOptionsChecked Maximum number of checked fields.
+	 * @param name name of the field created (by default).
+	 * @param rows rows of the panel.
+	 * @param cols columns of the panel.
+	 */
+	public DataCheckPanel(int maxOptionsChecked, int rows, int cols) {
+		super();
+		if (maxOptionsChecked >1){
+			this.maxOptionsChecked = maxOptionsChecked;
+		}
+		setLayout(new GridLayout(rows, cols));
+	}
+	
+	
+	/**
 	 * Adds a checkbox to the panel
 	 * @param name Name of the checkbox.
 	 */
